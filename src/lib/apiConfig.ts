@@ -1,1 +1,1 @@
-export const API_BASE = "http://192.168.43.197:3000";
+export const API_BASE = "https://bluffix-production.up.railway.app";
