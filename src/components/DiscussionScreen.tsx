@@ -40,7 +40,7 @@ export const DiscussionScreen: React.FC<DiscussionScreenProps> = ({
       }, 8000);
       return () => clearTimeout(timer);
     }
-  }, [activeGame.clues, activeGame.aiAnomalyName]);
+  }, [activeGame.clues, activeGame.aiAnomalyName, aiAnalysis]);
 
   // AI VOICE BROADCAST LOGIC
   const startVoiceBroadcast = () => {

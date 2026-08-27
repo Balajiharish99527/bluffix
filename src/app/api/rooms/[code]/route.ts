@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
 import { RoomManager } from "@/lib/roomManager";
-export const dynamic = "force-static";
-
-export function generateStaticParams() {
-  return [{ code: "_build" }];
-}
+export const dynamic = "force-dynamic";
 
 export async function GET(
   req: Request,

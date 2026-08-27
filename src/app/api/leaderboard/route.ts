@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { desc } from "drizzle-orm";
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   if (!db) {

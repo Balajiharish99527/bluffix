@@ -22,6 +22,7 @@ import { RoomState } from "@/lib/roomManager";
 import { Language, translations } from "@/lib/i18n";
 import { sounds } from "@/lib/audio";
 import { API_BASE } from "@/lib/apiConfig";
+import { GameLogo } from "@/components/GameLogo";
 import * as Icons from "lucide-react";
 
 interface UserProfile {
@@ -71,14 +72,7 @@ export default function GameContainer() {
           localStorage.setItem("bluffix_username", data.user.username);
           localStorage.setItem("bluffix_avatar", data.user.avatar);
 
-          // Auto-join if link parameter exists
-          const params = new URLSearchParams(window.location.search);
-          const joinCode = params.get("join");
-          if (joinCode && !room) {
-            handleJoinRoom(joinCode.toUpperCase());
-            // Clear URL param
-            window.history.replaceState({}, document.title, window.location.pathname);
-          }
+          // Auto-join will be handled by useEffect watching user
         }
       })
       .catch((err) => console.error(err));
@@ -182,6 +176,17 @@ export default function GameContainer() {
       setJoinError("Failed to connect to server");
     }
   };
+
+  // Auto-join room if URL has ?join=CODE parameter
+  useEffect(() => {
+    if (!user) return;
+    const params = new URLSearchParams(window.location.search);
+    const joinCode = params.get("join");
+    if (joinCode && !room) {
+      handleJoinRoom(joinCode.toUpperCase());
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, [user]);
 
   const handleReady = async () => {
     if (!room || !user) return;
@@ -386,18 +391,9 @@ export default function GameContainer() {
             <div className="space-y-6">
               <div className="relative inline-flex items-center justify-center group">
                 <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-[2.5rem] blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                <div className="relative w-28 h-28 rounded-[2.5rem] bg-zinc-900 border border-zinc-800 shadow-2xl flex items-center justify-center transform group-hover:scale-105 transition-transform duration-500">
-                  <Icons.Sparkles className="w-12 h-12 text-indigo-400 animate-float" />
+                <div className="relative transform group-hover:scale-105 transition-transform duration-500">
+                  <GameLogo size={240} />
                 </div>
-              </div>
-
-              <div className="space-y-2">
-                <h1 className="text-6xl sm:text-7xl font-black tracking-tighter text-white uppercase italic">
-                  {t.gameTitle}<span className="text-rose-500 not-italic">.</span>
-                </h1>
-                <p className="text-xs font-black text-zinc-500 uppercase tracking-[0.4em] px-4">
-                  Neural Intelligence Deducted
-                </p>
               </div>
             </div>
 

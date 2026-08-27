@@ -1,6 +1,6 @@
 import { RoomManager } from "@/lib/roomManager";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return [{ code: "_build" }];

@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import crypto from "crypto";
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 function getUUID(): string {
   try {
