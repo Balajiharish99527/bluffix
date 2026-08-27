@@ -12,5 +12,5 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["npm", "start"]
+CMD ["sh", "-c", "timeout 60 npx drizzle-kit push 2>&1 || true && npm start"]
 
